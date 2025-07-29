@@ -1,0 +1,5 @@
+[environment.development]
+store = "https://finalpractice.myshopify.com"
+password = "12345"
+theme_id = 134825869425
+
