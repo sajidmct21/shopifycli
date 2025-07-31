@@ -1,0 +1,81 @@
+<style>
+   .collection-tabs-{{ section.id }} ul{
+     display:flex;
+     justify-content:flex-start;
+     gap:2rem;
+     flex-wrap:wrap;
+     padding: 0;
+
+     @media screen and (max-width:767px) {
+      gap:1rem;
+      flex-wrap:nowrap;
+      overflow-x:scroll;
+      overflow-y:hidden;
+     }
+   }
+
+   .collection-tabs-{{ section.id }} li{
+    list-style: none;
+    border:0.2rem solid black;
+    border-radius:1rem;
+    padding:1rem 1.2rem;
+    margin-bottom:1rem;
+   }
+   .collection-tabs-{{ section.id }} a{
+     text-decoration:none;
+     color:#000;
+     font-size:2rem;
+     display:flex;
+     align-items:center;
+     gap: 0.5rem;
+
+     @media screen and (max-width:767px) {
+      font-size:1.5rem;
+      width:max-content;
+     }
+   }
+  .collection-tabs-{{ section.id }} .circle{
+     width:20px;
+     height:20px;
+     border-radius:50%;
+   }
+
+   @media screen and (max-width:767px) {
+    .collection-tabs-{{ section.id }} ul{
+
+    }
+
+    .collection-tabs-{{ section.id }} a{
+
+    }
+   }
+</style>
+
+<div class="page-width collection-tabs-{{ section.id }}">
+  <ul>
+    {% for collection in collections %}
+      <li>
+        <a href="{{ collection.url }}">
+          {{ collection.image | image_url: width: 20 | image_tag: class: 'circle' }}
+          {{ collection.title }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
+{% schema %}
+{
+  "name": "Collection Tabs",
+  "tag": "section",
+  "settings": [],
+  "blocks": [],
+  "presets": [
+    {
+      "name": "Collection Tabs",
+      "category": "Custom",
+      "settings": {}
+    }
+  ]
+}
+{% endschema %}
