@@ -13,9 +13,17 @@
       "type": "collection-tabs-gm",
       "name": "Collection Tabs",
       "settings": {}
+    },
+    "text_with_line_CxBXqQ": {
+      "type": "text-with-line",
+      "name": "Text with Line",
+      "settings": {
+        "text": "20 products"
+      }
     }
   },
   "order": [
-    "collection_tabs_gm_z3GHMn"
+    "collection_tabs_gm_z3GHMn",
+    "text_with_line_CxBXqQ"
   ]
 }
