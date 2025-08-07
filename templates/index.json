@@ -29,39 +29,32 @@
         "product_count": 4
       }
     },
-    "custom_slider_Gki3cK": {
+    "custom_slider_dh8tTM": {
       "type": "custom-slider",
       "blocks": {
-        "slide_igRXTr": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/womens-red-t-shirt_925x_d9950e5f-0bb2-42ae-bf65-70bce187b47a.jpg"
-          }
-        },
-        "slide_cU9cdm": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/woman-in-the-city_925x_d0735d9d-bddc-4aa7-8752-dd67b0d1157d.jpg"
-          }
-        },
-        "slide_LXYRxb": {
+        "slide_9AxKfC": {
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/17.png"
           }
         },
-        "slide_VpGWTk": {
+        "slide_4bt8WM": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/menswear-blue-zip-up-jacket_925x_7f9194d7-645b-40da-b8ad-dae553052f3e.jpg"
+            "image": "shopify://shop_images/putting-on-your-shoes_925x_1628dbea-d76a-4f42-8487-a5d7dbf5a873.jpg"
+          }
+        },
+        "slide_jXiCGN": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/woman-in-the-city_925x_d0735d9d-bddc-4aa7-8752-dd67b0d1157d.jpg"
           }
         }
       },
       "block_order": [
-        "slide_igRXTr",
-        "slide_cU9cdm",
-        "slide_LXYRxb",
-        "slide_VpGWTk"
+        "slide_9AxKfC",
+        "slide_4bt8WM",
+        "slide_jXiCGN"
       ],
       "name": "Image Slider Section",
       "settings": {
@@ -73,6 +66,6 @@
     "collection_tabs_gm_z3GHMn",
     "text_with_line_CxBXqQ",
     "featured_coolection_custom_BEYLwb",
-    "custom_slider_Gki3cK"
+    "custom_slider_dh8tTM"
   ]
 }
