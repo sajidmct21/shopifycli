@@ -26,11 +26,7 @@
   "presets": [
     {
       "name": "Image Slider Section",
-      "category": "Custom",
       "blocks": [
-        {
-          "type": "slide"
-        },
         {
           "type": "slide"
         },
@@ -55,12 +51,22 @@
   <div class="slider-wrapper">
     <div class="slider-track">
       {% for block in section.blocks %}
-        {% if block.settings.image != blank %}
+        {% if block.settings.image %}
           <div class="slide">
-            <img src="{{ block.settings.image | image_url }}" width="500px" height="400px" alt="Slide {{ forloop.index }}" />
+            {{ block.settings.image | image_tag: width: 800, height: 500, crop: "center", class: "slider-img", alt: "Slide " | append: forloop.index }}
           </div>
         {% endif %}
       {% endfor %}
+
+      {%- comment -%}
+        Clone first slide for smooth looping
+      {%- endcomment -%}
+      {% assign first_block = section.blocks | first %}
+      {% if first_block.settings.image %}
+        <div class="slide">
+          {{ first_block.settings.image | image_tag: width: 800, height: 500, crop: "center", class: "slider-img", alt: "Cloned Slide" }}
+        </div>
+      {% endif %}
     </div>
   </div>
 </div>
@@ -89,6 +95,8 @@
 .slider-wrapper {
   overflow: hidden;
   position: relative;
+  max-width: 800px;
+  margin: auto;
 }
 .slider-track {
   display: flex;
@@ -97,9 +105,14 @@
 .slide {
   min-width: 100%;
   flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.slide img {
-  width: 100%;
+.slider-img {
+  width: 800px;
+  height: 500px;
+  object-fit: cover;
   display: block;
 }
 </style>
@@ -108,27 +121,52 @@
 document.addEventListener('DOMContentLoaded', function () {
   const track = document.querySelector('.slider-track');
   const slides = document.querySelectorAll('.slide');
+  const totalSlides = slides.length;
   const nextBtn = document.querySelector('.slider-next');
   const prevBtn = document.querySelector('.slider-prev');
   let index = 0;
+  let allowTransition = true;
 
-  function updateSlider() {
-    track.style.transform = 'translateX(' + (-index * 100) + '%)';
+  function updateSlider(withTransition = true) {
+    if (withTransition) {
+      track.style.transition = 'transform 0.5s ease-in-out';
+    } else {
+      track.style.transition = 'none';
+    }
+    track.style.transform = `translateX(-${index * 100}%)`;
   }
 
-  nextBtn?.addEventListener('click', () => {
-    index = (index + 1) % slides.length;
-    updateSlider();
-  });
+  function nextSlide() {
+    if (index >= totalSlides - 1) {
+      index++;
+      updateSlider();
+      setTimeout(() => {
+        index = 0;
+        updateSlider(false);
+      }, 500);
+    } else {
+      index++;
+      updateSlider();
+    }
+  }
 
-  prevBtn?.addEventListener('click', () => {
-    index = (index - 1 + slides.length) % slides.length;
-    updateSlider();
-  });
+  function prevSlide() {
+    if (index <= 0) {
+      index = totalSlides - 1;
+      updateSlider(false);
+      setTimeout(() => {
+        index--;
+        updateSlider();
+      }, 50);
+    } else {
+      index--;
+      updateSlider();
+    }
+  }
 
-  setInterval(() => {
-    index = (index + 1) % slides.length;
-    updateSlider();
-  }, 3000);
+  nextBtn?.addEventListener('click', nextSlide);
+  prevBtn?.addEventListener('click', prevSlide);
+
+  setInterval(nextSlide, 4000);
 });
 </script>
