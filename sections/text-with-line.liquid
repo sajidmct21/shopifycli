@@ -1,0 +1,46 @@
+{% schema %}
+{
+  "name": "Text with Line",
+  "tag": "section",
+  "class": "text-with-line",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "30 products"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Text with Line"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="text-line-container">
+  <span class="line-text">{{ section.settings.text }}</span>
+  <span class="line-fill"></span>
+</div>
+
+<style>
+.text-line-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.line-text {
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.line-fill {
+  flex-grow: 1;
+  height: 1px;
+  background-color: #d1d1d1;
+}
+</style>
