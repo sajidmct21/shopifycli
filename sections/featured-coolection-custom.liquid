@@ -12,12 +12,13 @@
       "type": "number",
       "id": "product_count",
       "label": "Number of Products to Display",
-      "default": 4,
+      "default": 4
     }
   ],
   "presets": [
     {
-      "name": "Featured Collection own"
+      "name": "Featured Collection Own",
+      "category": "Custom"
     }
   ]
 }
@@ -131,30 +132,35 @@
 {% if section.settings.collection %}
   <div class="custom-featured-collection">
     <div class="product-grid">
-      {% for product in section.settings.collection.products | slice: 0, section.settings.product_count %}
-        <div class="custom-product-card">
-          <div class="image-wrapper">
-            <a href="{{ product.url }}">
-              {{ product.featured_image | image_url: width: 600 | image_tag: class: 'product-image' }}
-            </a>
-            {% if product.available %}
-              <form method="post" action="/cart/add" class="add-to-cart-form">
-                <input type="hidden" name="id" value="{{ product.variants.first.id }}">
-                <button type="submit" class="add-to-cart-button">Add to Cart</button>
-              </form>
-            {% else %}
-              <div class="add-to-cart-form">
-                <span style="background:#999;color:#fff;padding:10px 15px;border-radius:4px;">Sold Out</span>
-              </div>
-            {% endif %}
+      {% assign max_products = section.settings.product_count | default: 4 %}
+      {% assign count = 0 %}
+      {% for product in section.settings.collection.products %}
+        {% if count < max_products %}
+          <div class="custom-product-card">
+            <div class="image-wrapper">
+              <a href="{{ product.url }}">
+                {{ product.featured_image | image_url: width: 600 | image_tag: class: 'product-image' }}
+              </a>
+              {% if product.available %}
+                <form method="post" action="{{ routes.cart_add_url }}" class="add-to-cart-form">
+                  <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+                  <button type="submit" class="add-to-cart-button">Add to Cart</button>
+                </form>
+              {% else %}
+                <div class="add-to-cart-form">
+                  <span style="background:#999;color:#fff;padding:10px 15px;border-radius:4px;">Sold Out</span>
+                </div>
+              {% endif %}
+            </div>
+            <div class="product-info">
+              <h3 class="product-title">
+                <a href="{{ product.url }}">{{ product.title }}</a>
+              </h3>
+              <p class="product-price">{{ product.price | money }}</p>
+            </div>
           </div>
-          <div class="product-info">
-            <h3 class="product-title">
-              <a href="{{ product.url }}">{{ product.title }}</a>
-            </h3>
-            <p class="product-price">{{ product.price | money }}</p>
-          </div>
-        </div>
+          {% assign count = count | plus: 1 %}
+        {% endif %}
       {% endfor %}
     </div>
   </div>
