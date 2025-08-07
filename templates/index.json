@@ -20,10 +20,19 @@
       "settings": {
         "text": "20 products"
       }
+    },
+    "featured_coolection_custom_BEYLwb": {
+      "type": "featured-coolection-custom",
+      "name": "Featured Collection Own",
+      "settings": {
+        "collection": "cloths",
+        "product_count": 4
+      }
     }
   },
   "order": [
     "collection_tabs_gm_z3GHMn",
-    "text_with_line_CxBXqQ"
+    "text_with_line_CxBXqQ",
+    "featured_coolection_custom_BEYLwb"
   ]
 }
