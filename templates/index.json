@@ -28,11 +28,51 @@
         "collection": "cloths",
         "product_count": 4
       }
+    },
+    "custom_slider_Gki3cK": {
+      "type": "custom-slider",
+      "blocks": {
+        "slide_igRXTr": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/womens-red-t-shirt_925x_d9950e5f-0bb2-42ae-bf65-70bce187b47a.jpg"
+          }
+        },
+        "slide_cU9cdm": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/woman-in-the-city_925x_d0735d9d-bddc-4aa7-8752-dd67b0d1157d.jpg"
+          }
+        },
+        "slide_LXYRxb": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/17.png"
+          }
+        },
+        "slide_VpGWTk": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/menswear-blue-zip-up-jacket_925x_7f9194d7-645b-40da-b8ad-dae553052f3e.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "slide_igRXTr",
+        "slide_cU9cdm",
+        "slide_LXYRxb",
+        "slide_VpGWTk"
+      ],
+      "name": "Image Slider Section",
+      "settings": {
+        "heading": "Our Gallery"
+      }
     }
   },
   "order": [
     "collection_tabs_gm_z3GHMn",
     "text_with_line_CxBXqQ",
-    "featured_coolection_custom_BEYLwb"
+    "featured_coolection_custom_BEYLwb",
+    "custom_slider_Gki3cK"
   ]
 }
