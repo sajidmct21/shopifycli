@@ -53,7 +53,7 @@
       {% for block in section.blocks %}
         {% if block.settings.image %}
           <div class="slide">
-            {{ block.settings.image | image_tag: width: 800, height: 500, crop: "center", class: "slider-img", alt: "Slide " | append: forloop.index }}
+            {{ block.settings.image | image_url | image_tag: width: 800, height: 500 | append: forloop.index }}
           </div>
         {% endif %}
       {% endfor %}
