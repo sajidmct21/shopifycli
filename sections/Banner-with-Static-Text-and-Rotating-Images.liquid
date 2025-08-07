@@ -1,0 +1,121 @@
+{% schema %}
+{
+  "name": "Banner Rotating Images",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Welcome to Our Store"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Discover our latest collection"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Image 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Image 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_3",
+      "label": "Image 3"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Banner with Rotating Images",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="split-hero">
+  <div class="text-side">
+    <h1>{{ section.settings.heading }}</h1>
+    <p>{{ section.settings.subheading }}</p>
+    {% if section.settings.button_link %}
+      <a href="{{ section.settings.button_link }}" class="hero-btn">{{ section.settings.button_text }}</a>
+    {% endif %}
+  </div>
+  <div class="image-side">
+    {% if section.settings.image_1 %}
+        {% comment %} {{ section.settings.image_1 |image_url: width: 400, height:400 |image_tag: class:'hero-img'  }} {% endcomment %}
+      <img src="{{ section.settings.image_1 | image_url:width:200,height:200 }}" class="hero-img active" width="" height="">
+    {% endif %}
+    {% if section.settings.image_2 %}
+        {% comment %} {{ section.settings.image_1 |image_url: width: 400, height:400 |image_tag:class:'hero-img'  }} {% endcomment %}
+      <img src="{{ section.settings.image_2 | image_url:width:200,height:200 }}" class="hero-img" width="" height="" />
+    {% endif %}
+    {% if section.settings.image_3 %}
+        {% comment %} {{ section.settings.image_1 |image_url: width: 400, height:400 |image_tag:class:'hero-img'  }} {% endcomment %}
+      <img src="{{ section.settings.image_3 | image_url:width:200,height:200 }}" class="hero-img" width="" height="" />
+    {% endif %}
+  </div>
+</div>
+
+<style>
+  .split-hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 400px;
+    padding: 40px;
+    gap: 40px;
+  }
+  .text-side {
+    flex: 1;
+  }
+  .image-side {
+    flex: 1;
+    position: relative;
+  }
+  .hero-img {
+    position: absolute;
+    top: 0; left: 0;
+    {% comment %} width: 100%;
+    height:auto; {% endcomment %}
+    width:200px;
+    height: 200px;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+  }
+  .hero-img.active {
+    opacity: 1;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const images = document.querySelectorAll('.hero-img');
+    let current = 0;
+
+    if (images.length > 1) {
+      setInterval(() => {
+        images[current].classList.remove('active');
+        current = (current + 1) % images.length;
+        images[current].classList.add('active');
+      }, 3000); // Change image every 3 seconds
+    }
+  });
+</script>
