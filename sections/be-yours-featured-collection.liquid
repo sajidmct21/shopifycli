@@ -1,0 +1,252 @@
+{% schema %}
+{
+  "name": "Be-yours F Collection",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Select Collection"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show Vendor",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show Product Ratings",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View All Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Be Yours Featured Collection",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+<section class="custom-featured-collection page-width">
+  {% assign collection = collections[section.settings.collection] %}
+
+  {% if collection and collection.products_count > 0 %}
+    <div class="grid-wrapper">
+      {% for product in collection.products limit: 4 %}
+        <div class="product-card">
+          <div class="image-wrapper">
+            <a href="{{ product.url }}">
+              {{ product.featured_image | image_url: width: 600 | image_tag: class: 'product-image' }}
+            </a>
+            <form method="post" action="{{ routes.cart_add_url }}" class="add-to-cart-form">
+              <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+              <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+            </form>
+          </div>
+          <div class="product-info text-{{ section.settings.text_alignment }}">
+            <h3 class="product-title">
+              <a href="{{ product.url }}">{{ product.title }}</a>
+            </h3>
+
+            {% if section.settings.show_vendor %}
+              <p class="vendor">{{ product.vendor }}</p>
+            {% endif %}
+
+            {% if section.settings.show_rating %}
+              {% assign rating = product.metafields.reviews.rating.value | default: 0 %}
+              {% assign rating_count = product.metafields.reviews.rating_count | default: 0 %}
+              <div class="rating">
+                {% for i in (1..5) %}
+                  {% if i <= rating %}
+                    ★
+                  {% else %}
+                    ☆
+                  {% endif %}
+                {% endfor %}
+                {% if rating_count > 0 %}
+                  <span class="rating-count">({{ rating_count }})</span>
+                {% endif %}
+              </div>
+            {% endif %}
+
+            <p class="price">{{ product.price | money }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if section.settings.view_all_link != blank %}
+      <div class="view-all-wrapper">
+        <a href="{{ section.settings.view_all_link }}" class="view-all-btn">View All</a>
+      </div>
+    {% endif %}
+  {% endif %}
+</section>
+
+<style>
+  /* Grid responsiveness */
+  .custom-featured-collection .grid-wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 1024px) {
+    .custom-featured-collection .grid-wrapper {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .custom-featured-collection .grid-wrapper {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Product Card */
+  .custom-featured-collection .product-card {
+    border: 1px solid #e5e5e5;
+    padding: 1rem;
+    border-radius: 10px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+  }
+
+  .custom-featured-collection .product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  }
+
+  /* Image + Add to Cart Button */
+  .custom-featured-collection .image-wrapper {
+    position: relative;
+    margin-bottom: 1rem;
+  }
+
+  {% comment %} .custom-featured-collection .product-image {
+    width: 100%;
+    border-radius: 8px;
+    display: block;
+  } {% endcomment %}
+
+  /* Fix image stretching */
+  .custom-featured-collection .product-image {
+    width: 100%;
+    height: auto; /* natural scaling */
+    border-radius: 8px;
+    display: block;
+    object-fit: cover; /* ensures no stretching */
+    aspect-ratio: 1/1; /* keeps square grid look */
+  }
+
+
+  /* Add to Cart Button Overlay */
+  .custom-featured-collection .add-to-cart-form {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .custom-featured-collection .product-card:hover .add-to-cart-form {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .custom-featured-collection .add-to-cart-btn {
+    padding: 10px 18px;
+    background: #111;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .custom-featured-collection .add-to-cart-btn:hover {
+    background: #333;
+  }
+
+  /* Product Info */
+  .custom-featured-collection .product-info {
+    margin-top: 0.5rem;
+  }
+
+  .custom-featured-collection .product-title {
+    font-size: 1rem;
+    margin: 0.5rem 0;
+  }
+
+  .custom-featured-collection .vendor {
+    font-size: 0.9rem;
+    color: #777;
+  }
+
+  .custom-featured-collection .price {
+    font-weight: bold;
+    margin-top: 0.5rem;
+  }
+
+  /* Rating */
+  .custom-featured-collection .rating {
+    font-size: 1rem;
+    color: #f5b50a;
+    margin: 0.5rem 0;
+  }
+
+  .custom-featured-collection .rating-count {
+    font-size: 0.85rem;
+    color: #555;
+    margin-left: 5px;
+  }
+
+  /* View All Button */
+  .custom-featured-collection .view-all-wrapper {
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  .custom-featured-collection .view-all-btn {
+    padding: 10px 20px;
+    background: #111;
+    color: #fff;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+  }
+
+  .custom-featured-collection .view-all-btn:hover {
+    background: #333;
+  }
+
+  .text-left{
+      text-align:left;
+  }
+  .text-right{
+      text-align:right;
+  }
+  .text-center{
+      text-align:center;
+  }
+</style>
