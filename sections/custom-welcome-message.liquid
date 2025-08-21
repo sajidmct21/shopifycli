@@ -1,0 +1,33 @@
+<section class="page-width">
+  <h1>{{ section.settings.heading }}</h1>
+  <h2>{{ shop.name | replace:"final","Final " | capitalize }}</h2>
+  <p>{{ section.settings.message }}</p>
+</section>
+{% schema %}
+{
+  "name": "Welcome Message",
+  "tag": "section",
+  "class": "welcome-message",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Welcome to my store"
+    },
+    {
+      "type": "textarea",
+      "id": "message",
+      "label": "Message",
+      "default": "This is a custome welcome message"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Welcome Message",
+      "category": "Custom",
+      "settings": {}
+    }
+  ]
+}
+{% endschema %}
